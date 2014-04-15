@@ -132,7 +132,11 @@ module Kitchen
         Array(config[:provision_command]).each do |cmd|
           custom << "RUN #{cmd}\n"
         end
-        [from, platform, base, custom].join("\n")
+        if config[:disable_setup]
+          [from, custom].join("\n")
+        else
+          [from, platform, base, custom].join("\n")
+        end
       end
 
       def parse_image_id(output)
